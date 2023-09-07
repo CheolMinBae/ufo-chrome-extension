@@ -1,4 +1,3 @@
-
 {
     "manifest_version": 3,
     "name": "Chrome Extension Starter",
@@ -15,12 +14,31 @@
     "background": {
         "service_worker": "js/backgroundPage.js"
     },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://localhost:3002/*",
+                "http://universe-ufo.hyundaicard.com:3000/*",
+                "https://universe-qa.hyundaicard.com/*"
+            ],
+            "js": ["js/contents.js"],
+            "match_origin_as_fallback": true,
+            "all_frames": true
+        }
+    ],
     "icons": {
         "16": "icon-16.png",
         "48": "icon-48.png",
         "128": "icon-128.png"
     },
-    "host_permissions": ["https:\/\/*/*"],
-    "permissions": ["tabs", "activeTab", "notifications", "scripting"]
+    "host_permissions": ["https://*/*"],
+    "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "tabs",
+        "downloads",
+        "webNavigation",
+        "debugger",
+        "scripting"
+    ]
 }
-

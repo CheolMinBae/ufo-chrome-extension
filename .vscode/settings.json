@@ -1,4 +1,12 @@
 {
-  "editor.formatOnSave": true,
-  "css.lint.unknownAtRules": "ignore"
+    "editor.formatOnSave": true,
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.alwaysShowStatus": true,
+    "files.autoSave": "onFocusChange",
+    "java.configuration.updateBuildConfiguration": "interactive",
 }
