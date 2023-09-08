@@ -1,20 +1,20 @@
 import browser from "webextension-polyfill";
 
 const init = () => {
-    const article = document.querySelector("#article > .buttons");
+    const article = document.querySelector("#article .buttons");
     console.log(article);
     if (article) {
-        const button = document.createElement("button");
-        button.classList.add("record-button");
-        button.textContent = "녹화 on";
+        const button = document.createElement("Button");
+        const videoIcon = document.createElement("UilVideo");
+        button.classList.add("ant-btn");
+        button.classList.add("ant-btn-secondary");
+        button.classList.add("ant-btn-sm");
+        button.classList.add("sc-iHbSHJ");
+        button.classList.add("dBTPGj");
+        button.setAttribute("type", "primary");
+        button.appendChild(videoIcon);
+        button.textContent = "녹화 시작";
         button.onclick = () => {
-            console.log("begin recording button");
-            // const devTools: any = chrome.devtools;
-            // console.log(devTools);
-            // chrome.runtime.sendMessage({ type: "begin-recording" });
-            // chrome.tabs.getCurrent((tab: any) => {
-
-            // });
             browser.runtime.sendMessage({
                 type: "init",
             });
@@ -43,5 +43,7 @@ window.addEventListener("load", function () {
 });
 
 chrome.runtime.onMessage.addListener((message: any, sender: any) => {
+    console.log("in contents scripts");
     console.log(message);
+    window.postMessage(message, "*");
 });

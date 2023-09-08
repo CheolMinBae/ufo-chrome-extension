@@ -46,7 +46,6 @@ const initTab = async (id: number) => {
     const tab = await createTab(
         "https://universe-qa.hyundaicard.com/demo/home",
     );
-    console.log(tab.tabId);
     if (tab.tabId) {
         await waitForLoad(tab.tabId);
         await attachDebugger(tab.tabId);
@@ -54,10 +53,10 @@ const initTab = async (id: number) => {
         await enablePageEvents(tab.tabId);
         const scripts = await makeInjectionScripts();
         injectScript(tab.tabId, scripts);
-        adaptListener();
+        adaptListener(id);
     }
 };
-const adaptListener = () => {
+const adaptListener = (parentTabId: number) => {
     const wrapper = (message: any, sender: any) => {
         // const options = {
         //     async: this.asyncMessageListening,
@@ -67,6 +66,9 @@ const adaptListener = () => {
         // };
         console.log("in recordReplayMessenger");
         console.log(message);
+        chrome.tabs.sendMessage(parentTabId, {
+            fromUniverse: message,
+        });
     };
     browser.runtime.onMessage.addListener(wrapper);
 };
@@ -93,7 +95,7 @@ browser.runtime.onMessage.addListener(
                             currentWindow: true,
                         },
                         (tabs) => {
-                            initTab(tabs[0].id);
+                            initTab(tabs[0].id as number);
                         },
                     );
                     break;
