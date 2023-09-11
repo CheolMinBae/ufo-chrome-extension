@@ -9,20 +9,6 @@ import { makeInjectionScripts } from "./utils";
 // Listen for messages sent from other parts of the extension
 const injectScript = async (tabId: number, scriptString: string) => {
     return new Promise((resolve, reject) => {
-        // chrome.tabs.executeScript(
-        //     tabId,
-        //     //If allFrames true and frameId is set, then the code is inserted in the selected frame and all of its child frames
-        //     //THIS ONLY INCLUDES VANILLA IFRAMES - FOR CROSS ORIGIN IFRAMES WE NEED TO HAVE THE SEPARATE ROUTINE BELOW
-        //     {
-        //         code: scriptString,
-        //         allFrames: true,
-        //         runAt: "document_idle",
-        //     },
-        //     //log the script injection so we can see what's happening and resolve the promise
-        //     () => {
-        //         resolve("");
-        //     },
-        // );
         browser.scripting.executeScript({
             target: {
                 tabId,
@@ -44,7 +30,7 @@ const injectScript = async (tabId: number, scriptString: string) => {
 };
 const initTab = async (id: number) => {
     const tab = await createTab(
-        "https://universe-qa.hyundaicard.com/demo/home",
+        "https://universe-qa.hyundaicard.com/demo/caravan/",
     );
     if (tab.tabId) {
         await waitForLoad(tab.tabId);
